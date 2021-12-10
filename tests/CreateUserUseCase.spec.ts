@@ -1,60 +1,8 @@
-import {v4 as uuidv4} from "uuid";
+import { IUsersRepository } from "../src/modules/accounts/repositories/IUsersRepository";
+import { UsersRepositoryMock } from "../src/modules/accounts/repositories/mocks/UsersRepositoryMock";
+import { CreateUserUseCase } from "../src/modules/accounts/useCases/CreateUser/CreateUserUseCase";
 
-class User {
-    id: string;
-    name?: string;
-    email?: string;
-    password?: string;
-
-
-    constructor() {
-        if (!this.id) 
-            this.id = uuidv4();
-    }
-}
-
-class CreateUserUseCase {
-    constructor(private usersRepository: UsersRepositoryMock) {}
-
-    async execute(name: string, email: string, password: string): Promise<User> {
-        const userAlreadyExists = await this.usersRepository.findByEmail(email);
-
-        if (userAlreadyExists) throw new Error("User Already Exists");
-
-        const user = this.usersRepository.create(name, email, password);
-        return user;
-    }
-}
-
-
-interface IUsersRepository {
-    create(name: string, email: string, password: string): Promise<User>;
-    findByEmail(email: string): Promise<User>;
-}
-
-class UsersRepositoryMock implements IUsersRepository {
-    users: User[] = [];
-
-    async create(name: string, email: string, password: string): Promise<User> {
-        const user = new User();
-
-        Object.assign(user, {
-            name,
-            email,
-            password
-        });
-
-        this.users.push(user);
-
-        return user;
-    }
-
-    async findByEmail(email: string): Promise<User> {
-        return this.users.find(user => user.email === email);
-    }
-}
-
-let usersRepositoryMock: UsersRepositoryMock;
+let usersRepositoryMock: IUsersRepository;
 let sut: CreateUserUseCase;
 
 describe("CreateUser", () => {
