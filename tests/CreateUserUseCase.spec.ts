@@ -54,22 +54,22 @@ class UsersRepositoryMock implements IUsersRepository {
     }
 }
 
+let usersRepositoryMock: UsersRepositoryMock;
+let sut: CreateUserUseCase;
 
 describe("CreateUser", () => {
-    it("should be able to create a new user", async () => {
-        const usersRepositoryMock = new UsersRepositoryMock();
-        const sut = new CreateUserUseCase(usersRepositoryMock); //system under test
-        
-        const user = await sut.execute("Gabriel", "gabriel@gmail.com", "1234");
+    beforeEach(() => {
+        usersRepositoryMock = new UsersRepositoryMock();
+        sut = new CreateUserUseCase(usersRepositoryMock); //system under test
+    });
 
+    it("should be able to create a new user", async () => {
+        const user = await sut.execute("Gabriel", "gabriel@gmail.com", "1234");
         expect(user).toHaveProperty("id");
     });
 
     it("should not be able to create a new user with same email", async () => {
         expect(async () => {
-            const usersRepositoryMock = new UsersRepositoryMock();
-            const sut = new CreateUserUseCase(usersRepositoryMock); //system under test
-            
             const user = await sut.execute("Gabriel", "gabriel@gmail.com", "1234");
             const user2 = await sut.execute("Vinicius", "gabriel@gmail.com", "1234");
         }).rejects.toThrow();
