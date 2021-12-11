@@ -18,8 +18,8 @@ describe("CreateUser", () => {
 
     it("should not be able to create a new user with same email", async () => {
         expect(async () => {
-            const user = await sut.execute("Gabriel", "gabriel@gmail.com", "1234");
-            const user2 = await sut.execute("Vinicius", "gabriel@gmail.com", "1234");
+            await sut.execute("Gabriel", "gabriel@gmail.com", "1234");
+            await sut.execute("Vinicius", "gabriel@gmail.com", "1234");
         }).rejects.toThrow();
     });
 });
