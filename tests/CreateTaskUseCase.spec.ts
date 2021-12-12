@@ -12,7 +12,11 @@ describe("CreateTask", () => {
     });
 
     it("should be able to create a new task", async () => {
-        const task = await createTaskUseCase.execute("Fazer ovo", "fazer ovo com bastante sal", "98yd98asy8d");
+        const task = await createTaskUseCase.execute({
+            name: "Fazer ovo",
+            description: "Fazer ovo com bastante sal",
+            user_id: "asuhashuahus"
+        });
         expect(task).toHaveProperty("id");
     });
 });

@@ -1,7 +1,8 @@
 import { Task } from "../entities/Task";
+import { ICreateTaskDTO } from "../dtos/ICreateTaskDTO";
 
 interface ITasksRepository {
-    create(name: string, description: string, user_id: string): Promise<Task>;
+    create(data: ICreateTaskDTO): Promise<Task>;
 }
 
 export { ITasksRepository }
