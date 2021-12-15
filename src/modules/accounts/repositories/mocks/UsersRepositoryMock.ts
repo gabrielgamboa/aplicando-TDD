@@ -1,10 +1,11 @@
+import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
 import { User } from "../../entities/User";
 import { IUsersRepository } from "../IUsersRepository";
 
 class UsersRepositoryMock implements IUsersRepository {
     users: User[] = [];
 
-    async create(name: string, email: string, password: string): Promise<User> {
+    async create({name, email, password}: ICreateUserDTO): Promise<User> {
         const user = new User();
 
         Object.assign(user, {

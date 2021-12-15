@@ -12,14 +12,28 @@ describe("CreateUser", () => {
     });
 
     it("should be able to create a new user", async () => {
-        const user = await sut.execute("Gabriel", "gabriel@gmail.com", "1234");
+        const user = await sut.execute({
+            name: "Gabriel",
+            email: "gabriel@gmail.com",
+            password: "1234",
+        });
+
         expect(user).toHaveProperty("id");
     });
 
     it("should not be able to create a new user with same email", async () => {
         expect(async () => {
-            await sut.execute("Gabriel", "gabriel@gmail.com", "1234");
-            await sut.execute("Vinicius", "gabriel@gmail.com", "1234");
+            await sut.execute({
+                name: "Gabriel",
+                email: "gabriel@gmail.com",
+                password: "1234",
+            });
+
+            await sut.execute({
+                name: "Gabriel",
+                email: "gabriel@gmail.com",
+                password: "1234",
+            });
         }).rejects.toThrow();
     });
 });
