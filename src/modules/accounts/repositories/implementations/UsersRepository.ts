@@ -27,6 +27,10 @@ class UsersRepository implements IUsersRepository {
         return this.repository.findOne({ email });
     }
 
+    findById(id: string): Promise<User> {
+        throw new Error("Method not implemented.");
+    }
+
 }
 
 export { UsersRepository }
