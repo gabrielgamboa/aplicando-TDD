@@ -1,6 +1,6 @@
 import { IUsersRepository } from "../src/modules/accounts/repositories/IUsersRepository";
 import { UsersRepositoryMock } from "../src/modules/accounts/repositories/mocks/UsersRepositoryMock";
-import { CreateUserUseCase } from "../src/modules/accounts/useCases/CreateUser/CreateUserUseCase";
+import { CreateUserUseCase } from "../src/modules/accounts/useCases/createUser/CreateUserUseCase";
 
 let usersRepositoryMock: IUsersRepository;
 let sut: CreateUserUseCase;

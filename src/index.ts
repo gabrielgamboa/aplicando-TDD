@@ -3,6 +3,7 @@ import cors from "cors";
 
 import "reflect-metadata";
 import "./database";
+import "./shared/container";
 
 import { routes } from "./routes";
 

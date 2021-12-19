@@ -1,9 +1,16 @@
+import { inject, injectable } from "tsyringe";
+import { hash } from "bcrypt";
 import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
 import { User } from "../../entities/User";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 
+@injectable()
 class CreateUserUseCase {
-    constructor(private usersRepository: IUsersRepository) { }
+    
+    constructor(
+        @inject("UsersRepository")
+        private usersRepository: IUsersRepository
+    ) {}
 
     async execute({ name, email, password }: ICreateUserDTO): Promise<User> {
         const userAlreadyExists = await this.usersRepository.findByEmail(email);
@@ -11,7 +18,14 @@ class CreateUserUseCase {
         if (userAlreadyExists)
             throw new Error("User Already Exists");
 
-        const user = this.usersRepository.create({ name, email, password });
+        const passwordHash = await hash(password, 8);
+        
+        const user = this.usersRepository.create({ 
+            name,
+            email,
+            password: passwordHash 
+        });
+
         return user;
     }
 }

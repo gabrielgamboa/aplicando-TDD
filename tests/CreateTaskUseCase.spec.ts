@@ -2,7 +2,7 @@ import { IUsersRepository } from "../src/modules/accounts/repositories/IUsersRep
 import { UsersRepositoryMock } from "../src/modules/accounts/repositories/mocks/UsersRepositoryMock";
 import { ITasksRepository } from "../src/modules/tasks/repositories/ITasksRepository";
 import { TasksRepositoryMock } from "../src/modules/tasks/repositories/mocks/TasksRepositoryMock";
-import { CreateTaskUseCase } from "../src/modules/tasks/useCases/CreateTaskUseCase";
+import { CreateTaskUseCase } from "../src/modules/tasks/useCases/createTask/CreateTaskUseCase";
 
 let createTaskUseCase: CreateTaskUseCase;
 let tasksRepository: ITasksRepository;
