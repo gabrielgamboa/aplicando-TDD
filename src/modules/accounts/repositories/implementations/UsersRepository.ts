@@ -23,12 +23,12 @@ class UsersRepository implements IUsersRepository {
         return user;
     }
 
-    findByEmail(email: string): Promise<User> {
-        return this.repository.findOne({ email });
+    async findByEmail(email: string): Promise<User> {
+        return await this.repository.findOne({ email });
     }
 
-    findById(id: string): Promise<User> {
-        throw new Error("Method not implemented.");
+    async findById(id: string): Promise<User> {
+        return await this.repository.findOne(id);
     }
 
 }
