@@ -21,6 +21,11 @@ export class CreateTasks1639920306547 implements MigrationInterface {
                         type: "varchar"
                     },
                     {
+                        name: "done",
+                        type: "boolean",
+                        default: false
+                    },
+                    {
                         name: "user_id",
                         type: "uuid",
                         isNullable: false
