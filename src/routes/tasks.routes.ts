@@ -8,6 +8,6 @@ const createTaskController = new CreateTaskController();
 const listTasksByUserController = new ListTasksByUserController();
 
 tasksRoutes.post("/", createTaskController.handle);
-tasksRoutes.get("/user", listTasksByUserController.handle);
+tasksRoutes.get("/user/:id", listTasksByUserController.handle);
 
 export { tasksRoutes }

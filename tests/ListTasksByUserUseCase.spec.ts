@@ -1,59 +1,54 @@
-import { IUsersRepository } from "../src/modules/accounts/repositories/IUsersRepository";
-import { UsersRepositoryMock } from "../src/modules/accounts/repositories/mocks/UsersRepositoryMock";
 import { ITasksRepository } from "../src/modules/tasks/repositories/ITasksRepository";
 import { TasksRepositoryMock } from "../src/modules/tasks/repositories/mocks/TasksRepositoryMock";
 
-import { CreateTaskUseCase } from "../src/modules/tasks/useCases/createTask/CreateTaskUseCase";
 import { ListTasksByUserUseCase } from "../src/modules/tasks/useCases/listTasksByUser/ListTasksByUserUseCase";
 
-const mockUserAccount = () => ({
-    id: "idmockado",
-    name: "carlos",
-    email: "carlos@cntdev.com",
-    password: "1234",
-    tasks: []
-});
+const mockTasks = () => ([
+    {
+        id: "abcd",
+        name: "Fazer ovo",
+        description: "fazer ovo com bastante sal",
+        done: false,
+        user_id: "idmockado"
+    },
+    {
+        id: "asdasdas",
+        name: "Fazer ovo",
+        description: "fazer ovo com bastante sal",
+        done: false,
+        user_id: "idmockado"
+    },
+]);
 
 
 let tasksRepositoryMock: ITasksRepository;
-let usersRepository: IUsersRepository;
-let createTaskUseCase: CreateTaskUseCase;
 let listTasksByUserUseCase: ListTasksByUserUseCase;
 
 describe("List tasks by user", () => {
     beforeEach(() => {
         tasksRepositoryMock = new TasksRepositoryMock();
-        usersRepository = new UsersRepositoryMock();
-        createTaskUseCase = new CreateTaskUseCase(tasksRepositoryMock, usersRepository);
         listTasksByUserUseCase = new ListTasksByUserUseCase(tasksRepositoryMock);
     });
 
 
     it("should be able to list tasks from an user", async () => {
-        const mockUser = mockUserAccount();
+        const tasks = mockTasks();
 
-        jest.spyOn(usersRepository, "findById").mockReturnValueOnce(new Promise((resolve, reject) => {
-            resolve(mockUser);
+        jest.spyOn(tasksRepositoryMock, "findByUser").mockReturnValueOnce(new Promise((resolve, reject) => {
+            resolve(tasks);
         }));
 
-        await createTaskUseCase.execute({
-            name: "Fazer ovo",
-            description: "Fazer ovo com bastante sal",
-            user_id: mockUser.id
-        });
+        const user_id = tasks[0].user_id;
+        const sut = await listTasksByUserUseCase.execute(user_id);
 
-        jest.spyOn(usersRepository, "findById").mockReturnValueOnce(new Promise((resolve, reject) => {
-            resolve(mockUser);
-        }));
+        expect(sut).toEqual(tasks);
+    });
 
-        await createTaskUseCase.execute({
-            name: "Varrer a casa",
-            description: "Varrer a casa com a nova vassoura que meu pai comprou",
-            user_id: mockUser.id
-        });
-
-        const sut = await listTasksByUserUseCase.execute("idmockado");
-
-        expect(sut).toHaveLength(2);
+    it("should not be able to list tasks from an user when not exists tasks", async () => {
+        expect(async () => {
+            const tasks = mockTasks();
+            const user_id = tasks[0].user_id;
+            await listTasksByUserUseCase.execute(user_id);
+        }).rejects.toThrow();
     });
 });
