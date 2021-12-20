@@ -39,12 +39,12 @@ describe("CreateTask", () => {
     });
 
     it("should not be able to create a new task if user_id does not exists", async () => {
-        const task = await createTaskUseCase.execute({
-            name: "Fazer ovo",
-            description: "Fazer ovo com bastante sal",
-            user_id: "asuhashuahus"
-        });
-
-        expect(task).toBeNull();
+        expect(async () => {
+            await createTaskUseCase.execute({
+                name: "Fazer ovo",
+                description: "Fazer ovo com bastante sal",
+                user_id: "asuhashuahus"
+            });
+        }).rejects.toThrow();
     });
 });

@@ -15,7 +15,7 @@ class Task {
     description: string;
     
     @Column()
-    done?: boolean;
+    done? = false;
 
     @ManyToOne(() => User)
     @JoinColumn({ name: "user_id"})

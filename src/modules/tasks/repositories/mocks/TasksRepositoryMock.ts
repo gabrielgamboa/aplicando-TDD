@@ -10,12 +10,16 @@ class TasksRepositoryMock implements ITasksRepository {
 
         Object.assign(task, {
             name,
-            description
+            description,
+            user_id
         });
 
         this.tasks.push(task);
-
         return task;
+    }
+
+    async findByUser(user_id: string): Promise<Task[]> {
+        return await this.tasks.filter(task => task.user_id === user_id);
     }
 }
 

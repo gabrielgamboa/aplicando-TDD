@@ -18,7 +18,7 @@ class CreateTaskUseCase {
         const user = await this.usersRepository.findById(user_id);
 
         if (!user) {
-            return null;
+            throw new Error("User not found");
         }
 
         const task = await this.tasksRepository.create({name, description, user_id});
