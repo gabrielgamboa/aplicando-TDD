@@ -9,7 +9,7 @@ class UpdateTaskController {
         const updateTaskUseCase = container.resolve(UpdateTaskUseCase);
         const updatedTask = await updateTaskUseCase.execute(id);
 
-        return response.json(updatedTask);
+        return response.status(204).json(updatedTask);
     }
 }
 
