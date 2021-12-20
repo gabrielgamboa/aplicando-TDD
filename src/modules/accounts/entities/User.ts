@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 import {v4 as uuidv4} from "uuid";
+import { Task } from "../../tasks/entities/Task";
 
 @Entity("users")
 class User {
@@ -14,6 +15,9 @@ class User {
     
     @Column()
     password?: string;
+
+    @OneToMany(type => Task, task => task.user)
+    tasks?: Task[];
 
     constructor() {
         if (!this.id) 

@@ -1,29 +1,19 @@
-import { Task } from "../src/modules/tasks/entities/Task";
 import { IUsersRepository } from "../src/modules/accounts/repositories/IUsersRepository";
 import { UsersRepositoryMock } from "../src/modules/accounts/repositories/mocks/UsersRepositoryMock";
 import { ITasksRepository } from "../src/modules/tasks/repositories/ITasksRepository";
 import { TasksRepositoryMock } from "../src/modules/tasks/repositories/mocks/TasksRepositoryMock";
+
 import { CreateTaskUseCase } from "../src/modules/tasks/useCases/createTask/CreateTaskUseCase";
+import { ListTasksByUserUseCase } from "../src/modules/tasks/useCases/listTasksByUser/ListTasksByUserUseCase";
 
 const mockUserAccount = () => ({
     id: "idmockado",
     name: "carlos",
     email: "carlos@cntdev.com",
-    password: "1234"
+    password: "1234",
+    tasks: []
 });
 
-class ListTasksByUserUseCase {
-    constructor(private tasksRepository: ITasksRepository) { }
-
-    async execute(user_id: string): Promise<Task[]> {
-        const tasks = await this.tasksRepository.findByUser(user_id);
-
-        if (tasks.length === 0)
-            throw new Error("No tasks found for this user");
-
-        return tasks;
-    }
-}
 
 let tasksRepositoryMock: ITasksRepository;
 let usersRepository: IUsersRepository;

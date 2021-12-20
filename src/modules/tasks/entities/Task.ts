@@ -15,18 +15,20 @@ class Task {
     description: string;
     
     @Column()
-    done? = false;
+    done?: boolean
 
-    @ManyToOne(() => User)
+    @ManyToOne(type => User, user => user.tasks)
     @JoinColumn({ name: "user_id"})
-    user: User;
+    user?: User;
 
     @Column()
     user_id: string;
 
     constructor() {
-        if (!this.id)
+        if (!this.id)  {
             this.id = uuidv4();
+            this.done = false;
+        }
     }
 }
 

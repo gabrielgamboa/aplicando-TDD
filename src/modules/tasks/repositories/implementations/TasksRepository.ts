@@ -22,6 +22,15 @@ class TasksRepository implements ITasksRepository {
 
         return task;
     }
+
+    async findByUser(user_id: string): Promise<Task[]> {
+        const tasks = await this.repository.createQueryBuilder("tasks")
+            .select(["tasks.id", "tasks.name", "tasks.description", "tasks.done"])
+            .where("tasks.user_id = :id", { id: user_id })
+            .getMany();
+
+        return tasks;
+    }
 }
 
 export { TasksRepository }
