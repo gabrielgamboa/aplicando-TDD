@@ -21,6 +21,15 @@ class TasksRepositoryMock implements ITasksRepository {
     async findByUser(user_id: string): Promise<Task[]> {
         return await this.tasks.filter(task => task.user_id === user_id);
     }
+
+    async findById(task_id: string): Promise<Task> {
+        return await this.tasks.find(task => task.id === task_id);
+    }
+
+    async updateTask(task: Task): Promise<Task> {
+        task.done = true;
+        return task;
+    }
 }
 
 export { TasksRepositoryMock }
