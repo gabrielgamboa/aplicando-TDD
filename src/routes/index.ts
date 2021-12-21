@@ -7,6 +7,6 @@ const routes = Router();
 
 routes.use("/users", usersRoutes);
 routes.use("/tasks", tasksRoutes);
-router.use(authenticateRoutes);
+routes.use(authenticateRoutes);
 
 export { routes }
