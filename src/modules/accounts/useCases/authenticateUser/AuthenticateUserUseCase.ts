@@ -3,6 +3,7 @@ import { sign } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
 
 import auth from "../../../../config/auth";
+import { AppError } from "../../../../shared/errors/AppError";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 
 interface IResponse {
@@ -29,12 +30,12 @@ class AuthenticateUserUseCase {
         const user = await this.usersRepository.findByEmail(email);
 
         if (!user)
-            throw new Error("E-mail or password incorrect");
+            throw new AppError("E-mail or password incorrect");
 
         const passwordMatch = await compare(password, user.password);
 
         if (!passwordMatch)
-            throw new Error("E-mail or password incorrect");
+            throw new AppError("E-mail or password incorrect");
 
         const token = sign({}, auth.secret_token, {
             subject: user.id,

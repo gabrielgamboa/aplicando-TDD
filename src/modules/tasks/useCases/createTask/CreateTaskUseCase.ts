@@ -1,4 +1,5 @@
 import { inject, injectable } from "tsyringe";
+import { AppError } from "../../../../shared/errors/AppError";
 import { IUsersRepository } from "../../../accounts/repositories/IUsersRepository";
 import { ICreateTaskDTO } from "../../dtos/ICreateTaskDTO";
 import { Task } from "../../entities/Task";
@@ -18,7 +19,7 @@ class CreateTaskUseCase {
         const user = await this.usersRepository.findById(user_id);
 
         if (!user) {
-            throw new Error("User not found");
+            throw new AppError("User not found");
         }
 
         const task = await this.tasksRepository.create({name, description, user_id});
