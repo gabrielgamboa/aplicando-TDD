@@ -1,6 +1,8 @@
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
+
+import auth from "../../../../config/auth";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 
 interface IResponse {
@@ -34,9 +36,9 @@ class AuthenticateUserUseCase {
         if (!passwordMatch)
             throw new Error("E-mail or password incorrect");
 
-        const token = sign({}, "d5c6d7e0392032715f66cbd14e085594", {
+        const token = sign({}, auth.secret_token, {
             subject: user.id,
-            expiresIn: "1d"
+            expiresIn: auth.expires_in_token
         });
 
         const tokenReturn: IResponse = {
