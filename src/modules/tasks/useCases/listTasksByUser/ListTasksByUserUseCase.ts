@@ -1,4 +1,5 @@
 import { inject, injectable } from "tsyringe";
+import { AppError } from "../../../../shared/errors/AppError";
 import { Task } from "../../entities/Task";
 import { ITasksRepository } from "../../repositories/ITasksRepository";
 
@@ -13,7 +14,7 @@ class ListTasksByUserUseCase {
         const tasks = await this.tasksRepository.findByUser(user_id);
 
         if (tasks.length === 0)
-            throw new Error("No tasks found for this user");
+            throw new AppError("No tasks found for this user");
 
         return tasks;
     }

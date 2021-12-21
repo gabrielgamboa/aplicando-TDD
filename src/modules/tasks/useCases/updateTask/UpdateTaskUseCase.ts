@@ -1,4 +1,5 @@
 import { inject, injectable } from "tsyringe";
+import { AppError } from "../../../../shared/errors/AppError";
 import { Task } from "../../entities/Task";
 import { ITasksRepository } from "../../repositories/ITasksRepository";
 
@@ -13,7 +14,7 @@ class UpdateTaskUseCase {
         const taskExists = await this.tasksRepository.findById(task_id);
 
         if (!taskExists)
-            throw new Error("Task not exists");
+            throw new AppError("Task not exists");
 
         const updatedTask = await this.tasksRepository.updateTask(taskExists);
 
