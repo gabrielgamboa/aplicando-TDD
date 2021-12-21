@@ -3,6 +3,7 @@ import { UsersRepositoryMock } from "../src/modules/accounts/repositories/mocks/
 import { ITasksRepository } from "../src/modules/tasks/repositories/ITasksRepository";
 import { TasksRepositoryMock } from "../src/modules/tasks/repositories/mocks/TasksRepositoryMock";
 import { CreateTaskUseCase } from "../src/modules/tasks/useCases/createTask/CreateTaskUseCase";
+import { AppError } from "../src/shared/errors/AppError";
 
 let createTaskUseCase: CreateTaskUseCase;
 let tasksRepository: ITasksRepository;
@@ -45,6 +46,6 @@ describe("CreateTask", () => {
                 description: "Fazer ovo com bastante sal",
                 user_id: "asuhashuahus"
             });
-        }).rejects.toThrow();
+        }).rejects.toBeInstanceOf(AppError);
     });
 });

@@ -3,6 +3,7 @@ import { hash } from "bcrypt";
 import { IUsersRepository } from "../src/modules/accounts/repositories/IUsersRepository";
 import { UsersRepositoryMock } from "../src/modules/accounts/repositories/mocks/UsersRepositoryMock";
 import { AuthenticateUserUseCase } from "../src/modules/accounts/useCases/authenticateUser/AuthenticateUserUseCase";
+import { AppError } from "../src/shared/errors/AppError";
 
 
 let authenticateUserUseCase: AuthenticateUserUseCase;
@@ -45,6 +46,6 @@ describe("Authenticate user", () => {
                 email: "fake@gmail.com",
                 password: "123456"
             });
-        }).rejects.toThrow();
+        }).rejects.toBeInstanceOf(AppError);
     })
 });

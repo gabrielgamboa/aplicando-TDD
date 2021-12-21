@@ -2,6 +2,7 @@ import { ITasksRepository } from "../src/modules/tasks/repositories/ITasksReposi
 import { TasksRepositoryMock } from "../src/modules/tasks/repositories/mocks/TasksRepositoryMock";
 
 import { ListTasksByUserUseCase } from "../src/modules/tasks/useCases/listTasksByUser/ListTasksByUserUseCase";
+import { AppError } from "../src/shared/errors/AppError";
 
 const mockTasks = () => ([
     {
@@ -49,6 +50,6 @@ describe("List tasks by user", () => {
             const tasks = mockTasks();
             const user_id = tasks[0].user_id;
             await listTasksByUserUseCase.execute(user_id);
-        }).rejects.toThrow();
+        }).rejects.toBeInstanceOf(AppError);
     });
 });

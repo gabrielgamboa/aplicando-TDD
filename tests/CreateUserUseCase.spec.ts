@@ -1,6 +1,7 @@
 import { IUsersRepository } from "../src/modules/accounts/repositories/IUsersRepository";
 import { UsersRepositoryMock } from "../src/modules/accounts/repositories/mocks/UsersRepositoryMock";
 import { CreateUserUseCase } from "../src/modules/accounts/useCases/createUser/CreateUserUseCase";
+import { AppError } from "../src/shared/errors/AppError";
 
 let usersRepositoryMock: IUsersRepository;
 let sut: CreateUserUseCase;
@@ -34,6 +35,6 @@ describe("CreateUser", () => {
                 email: "gabriel@gmail.com",
                 password: "1234",
             });
-        }).rejects.toThrow();
+        }).rejects.toBeInstanceOf(AppError);
     });
 });

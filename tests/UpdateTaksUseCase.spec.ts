@@ -1,6 +1,7 @@
 import { ITasksRepository } from "../src/modules/tasks/repositories/ITasksRepository";
 import { TasksRepositoryMock } from "../src/modules/tasks/repositories/mocks/TasksRepositoryMock";
 import { UpdateTaskUseCase } from "../src/modules/tasks/useCases/updateTask/UpdateTaskUseCase";
+import { AppError } from "../src/shared/errors/AppError";
 
 
 const mockTask = () => (
@@ -39,6 +40,6 @@ describe("Update task", () => {
             const mockTaskInstance = mockTask();
             await updateTaskUseCase.execute(mockTaskInstance.id);
 
-        }).rejects.toThrow();
+        }).rejects.toBeInstanceOf(AppError);
     });
 });

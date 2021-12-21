@@ -6,7 +6,7 @@
 
 * [Node.js](https://nodejs.org/en/) 
 * [Express.js](https://expressjs.com/) 
-* [Jest.js]()
-* [Typescript]()
+* [Jest.js](https://jestjs.io/)
+* [Typescript](https://www.typescriptlang.org/)
 * [PostgreSQL](https://www.postgresql.org/)
 
